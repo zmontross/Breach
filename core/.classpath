@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry sourcepath="D:/Users/Zachary/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.1/967b353957d44206e217414fa0e229f71c6a9dc7/gdx-1.9.1-sources.jar" kind="lib" path="D:/Users/Zachary/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.1/41e844a4849872fdb9c33f3f2790e356f907f491/gdx-1.9.1.jar"/>
+	<classpathentry sourcepath="D:/Users/Zachary/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.1/b961b3feb67a5b35fb0dc75d97ce61158f053e56/gdx-freetype-1.9.1-sources.jar" kind="lib" path="D:/Users/Zachary/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.1/984e5fb95e17b03ae5884205f8b886930ef4867/gdx-freetype-1.9.1.jar"/>
+	<classpathentry sourcepath="D:/Users/Zachary/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.7.0/fedc63e153ddbd33ea94c1ed379f811c6688269d/gdx-ai-1.7.0-sources.jar" kind="lib" path="D:/Users/Zachary/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.7.0/e74a876dbaabe28abe8160d677b0a67b61c7dfac/gdx-ai-1.7.0.jar"/>
+	<classpathentry sourcepath="D:/Users/Zachary/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/761d4182b29162ddd88b5d49152b8d36acb628f4/ashley-1.7.0-sources.jar" kind="lib" path="D:/Users/Zachary/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4/ashley-1.7.0.jar"/>
+</classpath>
