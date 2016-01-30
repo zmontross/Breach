@@ -7,7 +7,7 @@ import com.zdm.breach.BreachGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "Breach Game";
+		config.title = "Breach";
 		config.useGL30 = false;
 		config.width = 800;
 		config.height = 600;
