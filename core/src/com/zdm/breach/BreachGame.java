@@ -6,10 +6,11 @@ import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.zdm.breach.objects.Mill;
@@ -21,36 +22,45 @@ public class BreachGame extends ApplicationAdapter {
 	
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	//private Texture texture;
 	ArrayList<Texture> textures;
-	//private Sprite sprite;
 	ArrayList<Mill> mills;
+	Mill user;
+	
+	Rectangle temp;
+	private float DEFAULT_ZOOM = 0f;
 	
 	@Override
 	public void create () {
-		camera = new OrthographicCamera();
+		//camera = new OrthographicCamera();
+		camera = new testCam();
+		camera.setToOrtho(false, WINDOW_WIDTH, WINDOW_HEIGHT);
+		//DEFAULT_ZOOM = camera.position.z;
+		DEFAULT_ZOOM = camera.zoom;
+		
 		batch = new SpriteBatch();
-		//img = new Texture("badlogic.jpg");
-		//texture = new Texture(Gdx.files.internal("res\\Mills_256x256_WHITE.png"));
+		
 		textures = new ArrayList<Texture>();
 		textures.add(new Texture(Gdx.files.internal("res\\Mills_256x256_RED.png")));
 		textures.add(new Texture(Gdx.files.internal("res\\Mills_256x256_CYAN.png")));
 		textures.add(new Texture(Gdx.files.internal("res\\Mills_256x256_GREEN.png")));
-		//sprite = new Sprite(texture, 0, 0, 256, 256);
-		//sprite.setScale(0.0625f);
-		//sprite.setPosition(100f, 50f);
+		
 		Random r = new Random();
 		
 		mills = new ArrayList<Mill>();
-		mills.add(new Mill(textures.get(0), (float) r.nextInt(WINDOW_WIDTH), (float) r.nextInt(WINDOW_HEIGHT)));
-		mills.add(new Mill(textures.get(1), (float) r.nextInt(WINDOW_WIDTH), (float) r.nextInt(WINDOW_HEIGHT)));
-		mills.add(new Mill(textures.get(2), (float) r.nextInt(WINDOW_WIDTH), (float) r.nextInt(WINDOW_HEIGHT)));
+		mills.add(new Mill(textures.get(0), (float) r.nextInt(WINDOW_WIDTH / 2), (float) r.nextInt(WINDOW_HEIGHT / 2)));
+		mills.add(new Mill(textures.get(1), (float) r.nextInt(WINDOW_WIDTH / 2), (float) r.nextInt(WINDOW_HEIGHT / 2)));
+		mills.add(new Mill(textures.get(2), (float) r.nextInt(WINDOW_WIDTH / 2), (float) r.nextInt(WINDOW_HEIGHT / 2)));
+		
+		user = new Mill(new Texture(Gdx.files.internal("res\\Mills_256x256_WHITE.png")), 0, 0);
+		
+		temp = new Rectangle(0, 0, WINDOW_WIDTH, 10);
+		Gdx.input.setInputProcessor((InputProcessor) camera);
 		
 	} // END
 
 	public void dispose(){
 		batch.dispose();
-		//texture.dispose();
+		
 		Iterator<Texture> itr = textures.iterator();
 		while(itr.hasNext()){
 			Texture t = itr.next();
@@ -63,25 +73,59 @@ public class BreachGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		//batch.setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(camera.combined);
 		
 		batch.begin();
-		//batch.draw(img, 0, 0);
-		//batch.draw(img, 400 - (img.getWidth() / 2), 300 - (img.getHeight() / 2)); // 800 x 600 screen
-		//batch.draw(img2, 400 - (img2.getWidth() / 2), 300 - (img2.getHeight() / 2)); // 800 x 600 screen
-
-		//sprite.draw(batch);
-		mills.get(0).draw(batch);
-		mills.get(1).draw(batch);
-		mills.get(2).draw(batch);
-		/*
-		Iterator<Mill> itr = mills.iterator();
-		while(itr.hasNext()){
-			Mill m = itr.next();
+		//
+		for(Mill m : mills){
 			m.draw(batch);
-		}*/
+		}
+		
+		user.draw(batch);
+		
+		camera.update();
 		
 		//
 		batch.end();
+		
+		
+		// Updates.
+		//user.update(Gdx.graphics.getDeltaTime());
+		if(user.hits(temp) != -1){
+			user.moveUp(Gdx.graphics.getDeltaTime());
+		}
+		
+		// Controls.
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+			user.moveLeft(Gdx.graphics.getDeltaTime());
+			//System.out.println("\tLeft!");
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+			user.moveRight(Gdx.graphics.getDeltaTime());
+			//System.out.println("\tRight!");
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+			user.moveUp(Gdx.graphics.getDeltaTime());
+			//System.out.println("\tUp!");
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+			user.moveDown(Gdx.graphics.getDeltaTime());
+			//System.out.println("\tDown!");
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+			//camera.position.z = DEFAULT_ZOOM;
+			camera.zoom = DEFAULT_ZOOM;
+			//camera.update();
+			System.out.println("\tCurrent zoom: " + camera.position.z);
+		}
+		
+		//System.out.println(user.toString());
+		
+		/**
+		 * Note to self. I REALLY need to invest in some unit vectors.
+		 * When a vert+horiz key combo is simultaneously pressed their mutual effects amplify each other.
+		 * i.e. When UP+LEFT, the sprite will move 2x normal speed in that direction as compared to a single-held key.
+		 * */
+		
 	} // END
 } // END
