@@ -10,7 +10,8 @@ public class DesktopLauncher {
 		config.title = "Breach";
 		config.useGL30 = false;
 		config.width = 800;
-		config.height = 600;
+		config.height = 800;
+		config.resizable = false;
 		new LwjglApplication(new BreachGame(), config);
 	}
 }
